@@ -81,6 +81,7 @@ function App() {
               type="text"
               value={formData.username}
               onChange={handleChange}
+              required
             />
 
             <label>Email Address:</label>
@@ -89,6 +90,7 @@ function App() {
               type="email"
               value={formData.email}
               onChange={handleChange}
+              required
             />
 
             <label>Phone Number:</label>
@@ -97,6 +99,7 @@ function App() {
               type="text"
               value={formData.phone}
               onChange={handleChange}
+              required
             />
 
             <label>Date of Birth:</label>
@@ -105,6 +108,7 @@ function App() {
               type="date"
               value={formData.dob}
               onChange={handleChange}
+              required
             />
 
             <button className="submit-button" onClick={handleSubmit}>

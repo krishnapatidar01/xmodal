@@ -17,7 +17,9 @@ function App() {
     }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
     const { username, email, phone, dob } = formData;
 
     if (!username || !email || !phone || !dob) {

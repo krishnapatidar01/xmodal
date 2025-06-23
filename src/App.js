@@ -27,7 +27,7 @@ function App() {
     }
 
     if (!email.includes("@")) {
-      alert("Invalid email. Please check your email address.");
+      alert(`"Please include an '@' in the email address. ${email}" is missing in '@' `);
       return;
     }
 

@@ -24,10 +24,10 @@ function App() {
     alert("Please enter your email.");
     return;
   } 
-    if (!username || !email || !phone || !dob) {
-      alert("Please fill out all fields.");
-      return;
-    }
+    // if (!username || !email || !phone || !dob) {
+    //   alert("Please fill out all fields.");
+    //   return;
+    // }
   if (!email) {
     alert("Please enter your email.");
     return;

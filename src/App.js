@@ -73,6 +73,7 @@ function App() {
       {showModal && (
         <div className="modal">
           <div className="modal-content">
+            <form method="post">
             <h2>Fill Details</h2>
 
             <label>Username:</label>
@@ -114,6 +115,7 @@ function App() {
             <button className="submit-button" onClick={handleSubmit}>
               Submit
             </button>
+            </form>
           </div>
         </div>
       )}

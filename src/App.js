@@ -17,7 +17,7 @@ function App() {
     }));
   };
 
- const handleSubmit = (e) => {
+const handleSubmit = (e) => {
   e.preventDefault();
   const { username, email, phone, dob } = formData;
 
@@ -67,6 +67,7 @@ function App() {
     dob: ""
   });
 };
+
 
   const handleClickOutside = (e) => {
     if (e.target.className === "modal") {

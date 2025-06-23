@@ -11,37 +11,50 @@ function App() {
   });
 
   const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData({ ...formData, [id]: value });
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.id]: e.target.value
+    }));
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+       e.preventDefault();
     const { username, email, phone, dob } = formData;
 
     if (!username || !email || !phone || !dob) {
-      return alert("Please fill all fields.");
+      alert("Please fill out all fields.");
+      return;
     }
 
     if (!email.includes("@")) {
-      return alert("Invalid email.");
+      alert("Invalid email. Please check your email address.");
+      return;
     }
 
     if (!/^\d{10}$/.test(phone)) {
-      return alert("Phone number must be 10 digits.");
+      alert("Invalid phone number. Please enter a 10-digit phone number.");
+      return;
     }
 
-    if (new Date(dob) > new Date()) {
-      return alert("Invalid date of birth.");
+    const today = new Date();
+    const enteredDate = new Date(dob);
+    if (enteredDate > today) {
+      alert("Invalid date of birth. Date cannot be in the future.");
+      return;
     }
 
-    alert("Form submitted successfully!");
+    // All validations passed
     setShowModal(false);
-    setFormData({ username: "", email: "", phone: "", dob: "" });
+    setFormData({
+      username: "",
+      email: "",
+      phone: "",
+      dob: ""
+    });
   };
 
   const handleClickOutside = (e) => {
-    if (e.target.classList.contains("modal")) {
+    if (e.target.className === "modal") {
       setShowModal(false);
     }
   };
@@ -50,36 +63,54 @@ function App() {
     if (showModal) {
       window.addEventListener("click", handleClickOutside);
     }
-    return () => {
-      window.removeEventListener("click", handleClickOutside);
-    };
+    return () => window.removeEventListener("click", handleClickOutside);
   }, [showModal]);
 
   return (
     <div className="App">
-      <h1>User Form Modal</h1>
+      <h1>User Details Modal</h1>
       <button onClick={() => setShowModal(true)}>Open Form</button>
 
       {showModal && (
         <div className="modal">
           <div className="modal-content">
-            <form onSubmit={handleSubmit}>
-              <h2>Enter Details</h2>
+            <h2>Fill Details</h2>
 
-              <label>Username:</label>
-              <input id="username" type="text" value={formData.username} onChange={handleChange} />
+            <label>Username:</label>
+            <input
+              id="username"
+              type="text"
+              value={formData.username}
+              onChange={handleChange}
+            />
 
-              <label>Email:</label>
-              <input id="email" type="email" value={formData.email} onChange={handleChange} />
+            <label>Email Address:</label>
+            <input
+              id="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
 
-              <label>Phone:</label>
-              <input id="phone" type="text" value={formData.phone} onChange={handleChange} />
+            <label>Phone Number:</label>
+            <input
+              id="phone"
+              type="number"
+              value={formData.phone}
+              onChange={handleChange}
+            />
 
-              <label>Date of Birth:</label>
-              <input id="dob" type="date" value={formData.dob} onChange={handleChange} />
+            <label>Date of Birth:</label>
+            <input
+              id="dob"
+              type="date"
+              value={formData.dob}
+              onChange={handleChange}
+            />
 
-              <button type="submit">Submit</button>
-            </form>
+            <button className="submit-button" onClick={handleSubmit}>
+              Submit
+            </button>
           </div>
         </div>
       )}

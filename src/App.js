@@ -20,22 +20,37 @@ function App() {
   const handleSubmit = (e) => {
        e.preventDefault();
     const { username, email, phone, dob } = formData;
-
+ if (!username) {
+    alert("Please enter your email.");
+    return;
+  } 
     if (!username || !email || !phone || !dob) {
       alert("Please fill out all fields.");
       return;
     }
-
+  if (!email) {
+    alert("Please enter your email.");
+    return;
+  } 
     if (!email.includes("@")) {
-      alert(`"Please include an '@' in the email address. ${email}" is missing in '@' `);
+      alert("Invalid email");
       return;
     }
+
+     if (!phone) {
+    alert("Please enter your phone number.");
+    return;
+  } 
 
     if (!/^\d{10}$/.test(phone)) {
       alert("Invalid phone number. Please enter a 10-digit phone number.");
       return;
     }
 
+ if (!dob) {
+    alert("Please enter your date of birth.");
+    return;
+  } 
     const today = new Date();
     const enteredDate = new Date(dob);
     if (enteredDate > today) {

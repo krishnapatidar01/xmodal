@@ -74,6 +74,7 @@ function App() {
       {showModal && (
         <div className="modal">
           <div className="modal-content">
+            <form method="post">
             <h2>Fill Details</h2>
 
             <label>Username:</label>
@@ -82,6 +83,7 @@ function App() {
               type="text"
               value={formData.username}
               onChange={handleChange}
+              required
             />
 
             <label>Email Address:</label>
@@ -90,6 +92,7 @@ function App() {
               type="email"
               value={formData.email}
               onChange={handleChange}
+              required
             />
 
             <label>Phone Number:</label>
@@ -98,6 +101,7 @@ function App() {
               type="number"
               value={formData.phone}
               onChange={handleChange}
+              required
             />
 
             <label>Date of Birth:</label>
@@ -106,11 +110,13 @@ function App() {
               type="date"
               value={formData.dob}
               onChange={handleChange}
+              required
             />
 
             <button className="submit-button" onClick={handleSubmit}>
               Submit
             </button>
+            </form>
           </div>
         </div>
       )}

@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import XModal from "./XModal";
-import "./XModal.css";
+import Modal from "./Modal";
+import "./App.css";
 
 function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className="modal">
-      <button onClick={() => setIsModalOpen(true)}>Open Form</button>
-      {isModalOpen && <XModal onClose={() => setIsModalOpen(false)} />}
+    <div className="App">
+      <h1>User Details Modal</h1>
+      <button onClick={() => setShowModal(true)}>Open Form</button>
+      {showModal && <Modal closeModal={() => setShowModal(false)} />}
     </div>
   );
 }

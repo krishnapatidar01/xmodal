@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-function Modal({ isOpen, closeModal }) {
+function Modal({ closeModal }) {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -12,70 +12,64 @@ function Modal({ isOpen, closeModal }) {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const isValidEmail = (email) =>
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-  const isValidPhone = (phone) =>
-    /^\d{10}$/.test(phone);
-
-  const isValidDOB = (dob) => {
-    const date = new Date(dob);
-    const now = new Date();
-    return date instanceof Date && !isNaN(date) && date < now;
+  const handleOutsideClick = (e) => {
+    if (e.target.className === "modal") {
+      closeModal();
+    }
   };
+
+  useEffect(() => {
+    window.addEventListener("click", handleOutsideClick);
+    return () => window.removeEventListener("click", handleOutsideClick);
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const { username, email, phone, dob } = formData;
 
-    if (!username || !email || !phone || !dob) {
-      alert("Please fill out all fields.");
+    if (!username) {
+      alert("Please fill the username field.");
       return;
     }
 
-    if (!isValidEmail(email)) {
-      alert("Invalid email");
+    if (!email) {
+      alert("Please fill the email field.");
       return;
     }
 
-    if (!isValidPhone(phone)) {
-      alert("Invalid phone number");
+    if (!email.includes("@")) {
+      alert("Invalid email. Please check your email address.");
       return;
     }
 
-    if (!isValidDOB(dob)) {
-      alert("Invalid date of birth");
+    if (!phone) {
+      alert("Please fill the phone field.");
       return;
     }
 
-    alert("Form submitted successfully!");
+    if (!/^\d{10}$/.test(phone)) {
+      alert("Invalid phone number. Please enter a 10-digit phone number.");
+      return;
+    }
+
+    if (!dob) {
+      alert("Please fill the dob field.");
+      return;
+    }
+
+    const now = new Date();
+    const selectedDate = new Date(dob);
+    if (selectedDate > now) {
+      alert("Invalid date of birth. Please enter a valid date.");
+      return;
+    }
+
     closeModal();
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div
-      className="modal-backdrop"
-      onClick={closeModal}
-      style={{
-        position: "fixed",
-        top: 0, left: 0,
-        width: "100%", height: "100%",
-        backgroundColor: "rgba(0,0,0,0.5)",
-        display: "flex", justifyContent: "center", alignItems: "center"
-      }}
-    >
-      <div
-        className="modal-content"
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          background: "#fff",
-          padding: "20px",
-          borderRadius: "10px",
-          width: "400px"
-        }}
-      >
+    <div className="modal">
+      <div className="modal-content">
         <form onSubmit={handleSubmit}>
           <h2>Fill Details</h2>
 
@@ -115,7 +109,9 @@ function Modal({ isOpen, closeModal }) {
             required
           />
 
-          <button type="submit">Submit</button>
+          <button type="submit" className="submit-button">
+            Submit
+          </button>
         </form>
       </div>
     </div>
